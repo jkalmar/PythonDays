@@ -9,7 +9,7 @@ from checkout.item import Item
 from checkout.discount import Discount
 from checkout.discount import Flavor
 
-#from checkout.discount_exception import DiscountNotApplicableException
+from checkout.discount_exception import DiscountNotApplicableException
 
 @pytest.fixture()
 def items():
@@ -60,3 +60,20 @@ def test_with_discount(checkout_with_items):
     checkout.add_discount(mega_discount)
 
     assert checkout.calculate_total() == 0.75
+
+
+def test_exception(checkout_with_items):
+    """
+    Test that checks discount
+    """
+    checkout = checkout_with_items
+
+    mega_discount = Discount(Flavor.Exclusive, 50)
+
+    checkout.add_discount(mega_discount)
+    checkout.add_discount(mega_discount)
+
+    with pytest.raises(DiscountNotApplicableException):
+        checkout.calculate_total()
+
+
