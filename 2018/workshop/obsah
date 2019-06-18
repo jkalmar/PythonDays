@@ -1,0 +1,8 @@
+1. priprava prostredia
+2. kompilacia modulu
+3. volanie hello world C funkcie z pythonu
+4. predanie parametrov do Add funkcie a vypisanie vysledku na obrazovku z C
+5. predanie parametrov do Add funkcie a vypisanie vysledku na obrazovku z Pythonu - tzn. predanie navratovej hodnoty do Pythonu
+6. transformacia pola vytvoreneho v pythone, predaneho do C - pridanie +5 ku kazdemu prvku a jeho navrat do pythonu
+7. predanie python funkcie ako callback do C kodu. C kod bude potom pravidelne volat tuto Python funkciu.
+8. [AK ZOSTANE CAS] tak predanie parametrov z Python kodu do C++ a vytvorenie objektu v C++, vykonanie hello world a predanie adresy objektu naspat pythonu.
