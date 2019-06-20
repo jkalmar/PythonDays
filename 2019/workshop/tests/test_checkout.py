@@ -10,6 +10,8 @@ from checkout.discount import Discount
 from checkout.discount import Flavor
 
 from checkout.discount_exception import DiscountNotApplicableException
+from checkout.discount_exception import ItemPriceIsBad
+
 
 @pytest.fixture()
 def items():
@@ -41,12 +43,33 @@ def test_basic_add(checkout_with_items):
     checkout = checkout_with_items
 
     total = checkout.calculate_total()
+    total = checkout.calculate_total()
+    total = checkout.calculate_total()
 
     assert total == 3
 
-    #total = checkout.calculate_total()
+def test_basic_add_negative():
+    """
+    Basic test that test 3 item without discount
+    """
 
-    #assert total == 3
+    milk = Item("Milk", -1.2, 0)
+    sugar = Item("Sugar", -0.8, 0)
+    candy = Item("Candy", -1.0, 0)
+
+    checkout = Checkout()
+
+    with pytest.raises(ItemPriceIsBad):
+        checkout.add_item(milk)
+        checkout.add_item(sugar)
+        checkout.add_item(candy)
+
+
+    total = checkout.calculate_total()
+
+    assert total == 0
+
+
 
 def test_with_discount(checkout_with_items):
     """
@@ -57,6 +80,19 @@ def test_with_discount(checkout_with_items):
     mega_discount = Discount(Flavor.Multiple, 50)
 
     checkout.add_discount(mega_discount)
+    checkout.add_discount(mega_discount)
+
+    assert checkout.calculate_total() == 0.75
+
+def test_with_abs_discount(checkout_with_items):
+    """
+    Test that checks discount
+    """
+    checkout = checkout_with_items
+
+    mega_discount = Discount(Flavor.Multiple, 5)
+    mega_discount.set_absolute()
+
     checkout.add_discount(mega_discount)
 
     assert checkout.calculate_total() == 0.75

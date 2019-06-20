@@ -2,6 +2,14 @@
 Module for discount exceptions
 """
 
+class ItemPriceIsBad(Exception):
+    """
+    Exception when item price is < 0
+    """
+    def __init__(self, message):
+        super(ItemPriceIsBad, self).__init__(message)
+
+
 class ItemIsNowFreeException(Exception):
     """
     Exception when Item price is too low (<= 0)

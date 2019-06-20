@@ -25,9 +25,7 @@ class Item:
         Calculates the price of this Item after all discounts is aplied
         """
         for discount in self.discount:
-            try:
-                discount.apply(self)
-            except ItemIsNowFreeException:
-                break
+            discount.apply(self)
+      
 
         return self.price_final

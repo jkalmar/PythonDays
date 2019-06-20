@@ -1,6 +1,9 @@
 """
 Module that implements checkout simulator
 """
+from .discount_exception import ItemPriceIsBad
+
+
 class Checkout:
     """
     Class representing checkout
@@ -22,17 +25,21 @@ class Checkout:
         """
         Adds item to list
         """
-        self.items.append(item)
+        if item.price > 0:
+            self.items.append(item)
+        else:
+            raise ItemPriceIsBad("zla cena")
 
     def calculate_total(self):
         """
         Calculates the total price of items with discounts
         """
-        for discount in self.discounts:
-            for item in self.items:
-                item.add_discount(discount)
+        if self.total_price == 0:
+            for discount in self.discounts:
+                for item in self.items:
+                    item.add_discount(discount)
 
-        for item in self.items:
-            self.total_price += item.final_price()
+            for item in self.items:
+                self.total_price += item.final_price()
 
         return self.total_price
